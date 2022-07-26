@@ -4,37 +4,40 @@ import { useEffect, useState } from 'react';
 
 const App = () => {
 
-  const [city, setCity] = useState([]);
-  const [temp, setTemp] = useState([]);
-  const [descr, setDescr] = useState([]);
-  const [img, setImg] = useState([])
-  const [searchedLocation, setSearchedLocation] = useState("Krakow")
-  const [locationName, setLocationName] = useState("")
-  var locationAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + searchedLocation +"&appid=489ec2c665aaa26c4f89caee27f9a6f6&units=metric"
+  const [weatherData, setWeatherData] = useState({
+    city:"",
+    temp:"",
+    descr:"",
+    img:"",
+    searchedLocation:"Warsaw",
+    locationName:""
+  });
+
+  var locationAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + weatherData.searchedLocation +"&appid=79e315101cd57eb176df522028f171bc&units=metric"
 
   const handleInput=(event)=>{
-      setLocationName(event.target.value);
+      setWeatherData({locationName: event.target.value});
   };
 
   const handleClick=()=>{
-    setSearchedLocation(locationName);
+    setWeatherData({searchedLocation: weatherData.locationName});
   };
-
-  
 
   useEffect(()=>{
         fetch(locationAPI)
             .then((response) => response.json())
             .then((data) =>{
             return(
-              setCity([data.name]),
-              setTemp([data.main.temp]),
-              setDescr([data.weather[0].description]),
-              setImg([data.weather[0].icon])
+              setWeatherData({
+                city:data.name,
+                temp:data.main.temp,
+                descr:data.weather[0].description,
+                img:data.weather[0].icon
+              })
               )});
         });
 
-  var imageURL =  "http://openweathermap.org/img/wn/" + img + "@2x.png";
+  var imageURL =  "http://openweathermap.org/img/wn/" + weatherData.img + "@2x.png";
 
   return (
     <div className="App w-screen">
@@ -45,9 +48,9 @@ const App = () => {
       </div>
       <div className='flex flex-wrap m-auto w-3/4 mt-10'>
         <Card
-        city = {city}
-        temp = {Math.round(temp)}
-        descr = {descr}
+        city = {weatherData.city}
+        temp = {Math.round(weatherData.temp)}
+        descr = {weatherData.descr}
         img ={imageURL}
          />
          
