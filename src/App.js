@@ -46,7 +46,7 @@ const App = () => {
         <input onChange={handleInput} placeholder="Type a city" className='text-2xl h-10 w-1/4 rounded-lg focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500' />
         <p><button onClick={handleClick} type='submit' className='mt-4 mb-10 h-14 w-1/12 ease-in-out duration-300 hover:bg-[#D61C4E]  bg-[#7D9D9C] rounded-full'>Add city</button></p>
       </div>
-      <div className='flex flex-wrap m-auto w-3/4 mt-10'>
+      <div className='flex m-auto w-3/4 mt-10'> 
       <Card
         key={weatherData.id}
         city = {weatherData.city} 
