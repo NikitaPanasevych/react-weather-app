@@ -4,27 +4,27 @@ import { useEffect, useState } from 'react';
 
 const App = () => {
 
+  const [locationName, setLocationName] = useState("")
   const [weatherData, setWeatherData] = useState({
+    id: 0,
     city:"",
     temp:"",
     descr:"",
     img:"",
     searchedLocation:"Warsaw",
-    locationName:""
   });
 
-  var locationAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + weatherData.searchedLocation +"&appid=79e315101cd57eb176df522028f171bc&units=metric"
+  var locationAPI = ["https://api.openweathermap.org/data/2.5/weather?q=" + weatherData.searchedLocation +"&appid=79e315101cd57eb176df522028f171bc&units=metric"]
 
   const handleInput=(event)=>{
-      setWeatherData({locationName: event.target.value});
+      setLocationName(event.target.value);
   };
 
   const handleClick=()=>{
-    setWeatherData({searchedLocation: weatherData.locationName});
+    setWeatherData({searchedLocation: locationName});    
   };
-
   useEffect(()=>{
-        fetch(locationAPI)
+    fetch(locationAPI)
             .then((response) => response.json())
             .then((data) =>{
             return(
@@ -35,7 +35,7 @@ const App = () => {
                 img:data.weather[0].icon
               })
               )});
-        });
+  })
 
   var imageURL =  "http://openweathermap.org/img/wn/" + weatherData.img + "@2x.png";
 
@@ -47,13 +47,13 @@ const App = () => {
         <p><button onClick={handleClick} type='submit' className='mt-4 mb-10 h-14 w-1/12 ease-in-out duration-300 hover:bg-[#D61C4E]  bg-[#7D9D9C] rounded-full'>Add city</button></p>
       </div>
       <div className='flex flex-wrap m-auto w-3/4 mt-10'>
-        <Card
-        city = {weatherData.city}
+      <Card
+        key={weatherData.id}
+        city = {weatherData.city} 
         temp = {Math.round(weatherData.temp)}
         descr = {weatherData.descr}
-        img ={imageURL}
-         />
-         
+        img = {imageURL}
+       />
       </div>
     </div>
   );
