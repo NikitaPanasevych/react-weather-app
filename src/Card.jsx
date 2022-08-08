@@ -12,8 +12,8 @@ const Card = (props) => {
             <h1 className="">{props.city}</h1>
             <h2 className="relative font-semibold top-3">{props.temp}°C</h2>
             <img className="h-48 w-48 m-auto relative bottom-4" src={props.img} />
-            <h2 className="relative w-3/4 m-auto bottom-8">{props.descr}</h2>
-            <Button onClick={handleClick} variant="outlined" color="error" className="bottom-6" startIcon={<DeleteIcon />}>
+            <h2 className="relative w-3/4 m-auto bottom-16">{props.descr}</h2>
+            <Button onClick={handleClick} variant="outlined" color="error" className="bottom-16" startIcon={<DeleteIcon />}>
                 Delete
             </Button>
         </div>
